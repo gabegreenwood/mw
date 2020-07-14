@@ -2,13 +2,6 @@
 # Script to mount a Bitlocker encrypted Windows partition on a linux
 # system by wrapping the dislocker utilitiy ( https://github.com/Aorimn/dislocker )
 
-LOCKER_DIRECTORY="/home/$LOGNAME/.bitlocker"
-FUSE_TARGET="$LOCKER_DIRECTORY/fusemount"
-TARGET_MOUNT="/home/$LOGNAME/windows"
-BITLOCKER_PARTITION='/dev/disk/by-partuuid/e28edf4e-f932-4f26-aa69-4e76e1cd4491'
-BITLOCKER_KEYFILE="$LOCKER_DIRECTORY/salt.gpg"
-DISLOCKER_FILE="$FUSE_TARGET/dislocker-file"
-
 # This script should never be run as root.
 # So, it's the first thing we check for:
 if [ "$EUID" -eq 0 ]; then
@@ -16,6 +9,9 @@ if [ "$EUID" -eq 0 ]; then
   echo "Halting execution early: no files have been changed"
   exit -1
 fi
+
+# Source our filepaths, mountpoints etc. from config file
+source config.sh
 
 # Exit if the mount already exists
 if [ "`df -Th | grep fuseblk | grep $TARGET_MOUNT`" ]; then
