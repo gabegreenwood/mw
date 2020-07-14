@@ -1,3 +1,16 @@
+###########################################################################
+# EDIT THE FIELDS BELOW TO MATCH YOUR SYSTEM
+###########################################################################
+
+# A device path pointing to the bitlocker-encrypted partition
+# Replace <PARTUUID> with the UUID of the PARTITION (NOT the disk)
+# that you are trying to decrypt
+BITLOCKER_PARTITION='/dev/disk/by-partuuid/<PARTUUID>'
+
+###########################################################################
+# Only edit the following entries if you have a very good reason
+###########################################################################
+
 # Private directory in user's home folder to hold back end files
 LOCKER_DIRECTORY="/home/$LOGNAME/.bitlocker"
 
@@ -7,9 +20,6 @@ FUSE_TARGET="$LOCKER_DIRECTORY/fusemount"
 
 # The directory to which your decrypted system will ultimately be mounted
 TARGET_MOUNT="/home/$LOGNAME/windows"
-
-# A device path pointing to the bitlocker-encrypted partition (note: PARTITION, not disk)
-BITLOCKER_PARTITION='/dev/disk/by-partuuid/e28edf4e-f932-4f26-aa69-4e76e1cd4491'
 
 # The encrypted file we will use to store your bitlocker recovery key
 BITLOCKER_KEYFILE="$LOCKER_DIRECTORY/salt.gpg"

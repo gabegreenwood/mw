@@ -1,7 +1,3 @@
-#!/bin/bash
-# Script to mount a Bitlocker encrypted Windows partition on a linux
-# system by wrapping the dislocker utilitiy ( https://github.com/Aorimn/dislocker )
-
 # This script should never be run as root.
 # So, it's the first thing we check for:
 if [ "$EUID" -eq 0 ]; then
