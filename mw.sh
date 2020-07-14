@@ -1,7 +1,4 @@
-#!/bin/bash
-
-# Script to mount a Bitlocker encrypted Windows partition on a linux
-# system by wrapping the dislocker utilitiy ( https://github.com/Aorimn/dislocker )
+#!/usr/bin/bash
 
 source config.sh
 
