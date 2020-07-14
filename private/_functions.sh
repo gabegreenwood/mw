@@ -35,17 +35,21 @@ create_runtime_directory()
         echo "ERROR: $0 expects 1 and only 1 argument"
         return -2
     fi
+    minimum=0
     dir=$1
     if [ ! -d $dir ]; then
         echo "Creating directory $dir"
         mkdir $dir
+        ret=$?
+        minimum=$(($minimum - $ret))
         chown $LOGNAME:$LOGNAME $dir
+        ret=$?
+        minimum=$(($minimum - $ret))
         chmod 750 $dir
-        return 0
-    else
-        echo "Requirement satisfied: $dir already exists"
-        return -1
+        ret=$?
+        minimum=$(($minimum - $ret))
     fi
+    return $minimum
 }
 
 check_device()

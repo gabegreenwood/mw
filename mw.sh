@@ -6,9 +6,11 @@ if [ "$EUID" -eq 0 ]; then
   exit -1
 fi
 
+cd $RUNTIME_ROOT_DIR
 # load configuration
 source config.sh
 # load functions
+cd private
 source _functions.sh
 
 # Exit if the decrypted filesystem is already mounted to our taret directory
@@ -20,8 +22,8 @@ fi
 
 # Check for missing dependencies
 $EXEC_SHELL _handle_dependencies.sh
-ret=$?
-if [ $ret < 0 ]; then
+exit_code=$?
+if [ $exit_code < 0 ]; then
     echo "Aborting process early due to missing dependencies."
     exit $ret
 fi
@@ -30,6 +32,13 @@ fi
 $EXEC_SHELL _identify_partition.sh
 exit_code=$?
 if [ $exit_code -ne 0 ]; then
+    exit $exit_code
+fi
+
+# Create runtime directories if they are missing
+$EXEC_SHELL _create_runtime_directories.sh
+if [ $exit_code < 0 ]; then
+    echo "Error creating runtime directories. Aborting"
     exit $exit_code
 fi
 
