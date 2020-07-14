@@ -19,3 +19,7 @@ BITLOCKER_KEYFILE="$LOCKER_DIRECTORY/salt.gpg"
 DISLOCKER_FILE="$FUSE_TARGET/dislocker-file"
 
 DEPENDENCIES="ntfs-3g gdisk gnupg bash shred"
+
+RUNTIME_ROOT_DIR=/home/g/code/mw
+RUNTIME_ROOT_DIR=/home/g/code/mw
+RUNTIME_ROOT_DIR=/home/g/code/mw
