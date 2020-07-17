@@ -15,3 +15,12 @@ EXEC_SHELL='/usr/bin/bash -c'
 # Make sure this is the directory where you want to store the link
 # to the executable
 BIN_PATH='/usr/local/bin'
+
+# Runtime root directory. This should be someplace accessible
+# by the user who will be running the program, and it should
+# be located on a filesystem mounted with execute permission.
+RUNTIME_ROOT_DIR="/home/$USER/code/mw"
+
+# The below file contains more global vars that should not
+# require any modification
+source $RUNTIME_ROOT_DIR/private/_config.sh
