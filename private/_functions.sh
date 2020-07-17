@@ -52,16 +52,13 @@ create_runtime_directory()
     return $minimum
 }
 
-check_device()
+find_bitlocker_device()
 {
-    if [ $# -ne 1 ]; then
-        echo "Error: read_device_path() accepts one and only one argument"
-        return -1
-    fi
-    filepath=$1
-    info=$blkid $filepath
+    device="$(lsblk -O | grep -i bitloc | awk '{print $3}')"
+    sudo blkid $device > /dev/null
     if [ $? == 0 ]; then
-        return 0
+        echo $device
+        return 0 
     else
         echo "Error: unable to locate device at $filepath"
         return -1

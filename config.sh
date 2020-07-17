@@ -24,3 +24,4 @@ RUNTIME_ROOT_DIR="/home/$USER/code/mw"
 # The below file contains more global vars that should not
 # require any modification
 source $RUNTIME_ROOT_DIR/private/_config.sh
+source $RUNTIME_ROOT_DIR/private/_functions.sh

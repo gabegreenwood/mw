@@ -6,12 +6,9 @@ if [ "$EUID" -eq 0 ]; then
   exit -1
 fi
 
-cd $RUNTIME_ROOT_DIR
+RUNTIME_ROOT_DIR=`pwd`
 # load configuration
 source config.sh
-# load functions
-cd private
-source _functions.sh
 
 # Exit if the decrypted filesystem is already mounted to our taret directory
 if [ "`df -Th | grep fuseblk | grep $TARGET_MOUNT`" ]; then
@@ -28,11 +25,13 @@ if [ $exit_code < 0 ]; then
     exit $ret
 fi
 
-# Identify the bitlocker partition
-$EXEC_SHELL _identify_partition.sh
-exit_code=$?
-if [ $exit_code -ne 0 ]; then
-    exit $exit_code
+# Identify the bitlocker device ID
+#TODO: ADD SUPPORT FOR MULTIPLE BITLOCKER PARTITIONS
+BITLOCKER_PARTITION=$(find_bitlocker_device)
+if [ $? -eq 0 ]; then
+    export BITLOCKER_PARTITION
+else
+    echo 'Error: unable to locate bitlocker partition'
 fi
 
 # Create runtime directories if they are missing
