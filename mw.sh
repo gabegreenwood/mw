@@ -6,9 +6,18 @@ if [ "$EUID" -eq 0 ]; then
   exit -1
 fi
 
-RUNTIME_ROOT_DIR=`pwd`
 # load configuration
-source config.sh
+source ./config.sh
+if [ ! "$RUNTIME_ROOT_DIR" ]; then
+    echo "Error: unable to source configuration file."
+    echo "Please make sure you run this script from the correct root directory."
+    exit -8
+fi
+cd $RUNTIME_ROOT_DIR
+source ./config.sh
+source ./private/_config.sh
+source ./private/_functions.sh
+export check_for_program validate_dependencies create_runtime_directory find_bitlocker_device
 
 # Exit if the decrypted filesystem is already mounted to our taret directory
 if [ "`df -Th | grep fuseblk | grep $TARGET_MOUNT`" ]; then
@@ -18,11 +27,11 @@ if [ "`df -Th | grep fuseblk | grep $TARGET_MOUNT`" ]; then
 fi
 
 # Check for missing dependencies
-$EXEC_SHELL _handle_dependencies.sh
+./private/_handle_dependencies.sh
 exit_code=$?
-if [ $exit_code < 0 ]; then
+if [ $exit_code -ne 0 ]; then
     echo "Aborting process early due to missing dependencies."
-    exit $ret
+    exit $exit_code
 fi
 
 # Identify the bitlocker device ID
@@ -35,14 +44,23 @@ else
 fi
 
 # Create runtime directories if they are missing
-$EXEC_SHELL _create_runtime_directories.sh
-if [ $exit_code < 0 ]; then
+./private/_create_runtime_directories.sh
+exit_code=$?
+if [ $exit_code -ne 0 ]; then
     echo "Error creating runtime directories. Aborting"
     exit $exit_code
 fi
 
-# execute the main program
-$EXEC_SHELL _mount_windows.sh
+# Create the encrypted file creating the bitlocker keys
+# (if not already found on system)
+if [ ! -f $BITLOCKER_KEYFILE ]; then
+    ./private/_generate_protected_keyfile.sh
+    exitcode=$?
+    if [ $exitcode -ne 0 ]; then exit $exitcode; fi
+fi
+
+# Decrypt and mount the bitlocker partition
+./private/_mount_windows.sh
 exit_code=$?
     if [ $exit_code -ne 0 ]; then
         exit $exit_code

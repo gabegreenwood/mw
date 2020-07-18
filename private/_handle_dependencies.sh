@@ -1,13 +1,29 @@
+# Check for program using `which` command.
+missing_dependencies=0
+check_for_program ()
+{
+    if [ $# -ne 1 ]; then
+        echo "ERROR: $0 expects 1 and only 1 argument"
+        exit -1
+    fi
+    prog=$1
+    which $prog > /dev/null 2>&1
+    if [ $? -ne 0 ]; then
+        echo "ERROR: executable $prog not found"
+        ((missing_dependencies++))
+    fi
+}
+
 # First make sure we can check for other programs
 check_for_program which
-exitcode=$?
-if [ $exitcode -ne 0 ]; then
-    exit $exitcode
+if [ $missing_dependencies -ne 0 ]; then
+    echo "Error: please install the `which` program on your system and try again."
+    exit -1
 fi
 
 # Check if dislocker is installed
 check_for_program dislocker
-if [ $? -ne 0]; then
+if [ $missing_dependencies -ne 0 ]; then
     echo "Please install dislocker utility and try again."
     echo "Note: It is highly recommended you use the latest version of dislocker."
     echo "      Even if dislocker is available from your package manager, you"
@@ -17,12 +33,7 @@ if [ $? -ne 0]; then
 fi
 
 # Check for any other dependencies listed in config
-validate_dependencies $DEPENDENCIES
-missing=$?
-if [ $missing -ne 0 ]; then
-    echo "Error: $missing missing dependencies."
-    echo 'Please make sure the above packages are installed and accessible on your $PATH.'
-    error_code=( -1 * $missing )
-    exit $error_code
-fi
-exit 0
+for program in $DEPENDENCIES; do
+    check_for_program $program
+done
+exit $missing_dependencies
