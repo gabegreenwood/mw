@@ -31,7 +31,7 @@ unset bitlocker_key
 if [ $exitcode -eq 0 ]; then
     # Mount the fuseblk object to a directory for easy access
     echo "Mounting decrypted bitlocker partition:"
-    cmd="sudo mount -t ntfs -o utf8 uid=$LOGNAME gid=$LOGNAME umask=000 $DISLOCKER_FILE $TARGET_MOUNT"
+    cmd="sudo mount $DISLOCKER_FILE $TARGET_MOUNT"
     echo $cmd
     $cmd
     exitcode=$?
@@ -48,6 +48,6 @@ else
     echo "Bitlocker decryption failed. Aborting"
     exit $exitcode
 fi
-
 exit 0
+
 
