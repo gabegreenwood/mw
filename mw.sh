@@ -62,9 +62,8 @@ fi
 # Decrypt and mount the bitlocker partition
 ./private/_mount_windows.sh
 exit_code=$?
-    if [ $exit_code -ne 0 ]; then
-        exit $exit_code
-    fi
+if [ $exit_code -ne 0 ]; then
+    exit $exit_code
 fi
 
 # return successfully if no errors were encountered
