@@ -6,7 +6,7 @@ if [ "$EUID" -eq 0 ]; then
   exit -1
 fi
 
-if [ "$1" -eq "--uninstall" ]; then
+if [ "$1" == "--uninstall" ]; then
     source ./uninstall.sh
     exit $?
 fi
