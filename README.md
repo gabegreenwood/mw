@@ -2,7 +2,7 @@
 
 ## mw == 'Mount Windows'
 
-#### This is a wrapper for [dislocker] (https://github.com/Aorimn/dislocker), written in Bash, that securely automates the process of decrypting and mounting a bitlocker-encrypted Windows partition on Linux. In a dual-boot environment, it conveniently allows you to access files from your Windows filesystm while running Linux, even if your Windows partition is encrypted using Bitlocker. The core decryption functionality is handled by dislocker. This utility simply automates the task of securely storing your bitlocker keys in a password protected, gnupg-encrypted file, and decrypting them on demand in order to mount the Bitlocker partition with minimal user effort.
+#### This is a wrapper for [dislocker] (https://github.com/Aorimn/dislocker) that securely automates the process of decrypting and mounting a bitlocker-encrypted Windows partition on Linux. In a dual-boot environment, it conveniently allows you to access files from your Windows filesystm while running Linux, even if your Windows partition is encrypted using Bitlocker. The core decryption functionality is handled by dislocker. This utility simply automates the task of securely storing your bitlocker keys in a password protected, gnupg-encrypted file, and decrypting them on demand in order to mount the Bitlocker partition with minimal user effort.
 
 ### INSTALLATION
 `cd /opt/build` [ optional: can be any directory you have rwx permissions for, e.g. /home/$USER ]  
