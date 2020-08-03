@@ -25,9 +25,12 @@ sudo rm -rf $RUNTIME_ROOT_DIR
 echo "Removing symlink to executable script..."
 sudo rm -f $BIN_PATH/mw
 
-if [ `df -Th | grep $TARGET_MOUNT` ]; then
+df -Th | grep $TARGET_MOUNT
+if [ $? -eq 0 ]; then
     echo "Attempting to unmount $TARGET_MOUNT"
     sudo umount -l $TARGET_MOUNT
+else
+    echo "Target mountpoint $TARGET_MOUNT is not mounted"
 fi
 
 if [ -f "$DISLOCKER_FILE" ]; then
