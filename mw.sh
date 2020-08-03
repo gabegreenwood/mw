@@ -6,6 +6,11 @@ if [ "$EUID" -eq 0 ]; then
   exit -1
 fi
 
+if [ "$1" -eq "--uninstall" ]; then
+    source ./uninstall.sh
+    exit $?
+fi
+
 # load configuration
 source ./config.sh
 if [ ! "$RUNTIME_ROOT_DIR" ]; then

@@ -5,7 +5,7 @@ function ask_yes_no {
     read -p "$1" yn
     case $yn in
         [Yy]* ) $2; break;;
-        [Nn]* ) exit;;
+        [Nn]* ) break;;
         * ) echo "Please answer yes or no.";;
     esac
 done
