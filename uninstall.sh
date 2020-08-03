@@ -35,7 +35,7 @@ fi
 
 if [ -f "$DISLOCKER_FILE" ]; then
     echo "Attempting unmount of dislocker file" 
-    sudo umount -l $DISLOCKER_FILE
+    sudo umount -l $FUSE_TARGET
 fi
 
 if [ -d "$LOCKER_DIRECTORY" ]; then

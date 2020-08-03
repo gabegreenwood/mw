@@ -44,8 +44,11 @@ if [ $exitcode -eq 0 ]; then
 	    exit $exitcode
     fi
 else
+    echo "ERROR: Bitlocker decryption failed"
+    echo "Attempting to unmount fuseblock target $FUSE_TARGET"
     sudo umount -l $FUSE_TARGET
-    echo "Bitlocker decryption failed. Aborting"
+    echo "Unmount command exited with status $?"
+    echo "Aborting task."
     exit $exitcode
 fi
 exit 0
