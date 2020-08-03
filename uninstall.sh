@@ -37,7 +37,7 @@ fi
 
 if [ -d "$LOCKER_DIRECTORY" ]; then
     ask_yes_no "Remove entire directory $LOCKER_DIRECTORY including any \
-    encrypted keyfiles? " "sudo rm -rf $LOCKER_DIRECTORY"
+encrypted keyfiles? " "sudo rm -rf $LOCKER_DIRECTORY"
 fi
 
 echo "Uninstallation Complete"
