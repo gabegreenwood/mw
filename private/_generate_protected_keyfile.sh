@@ -39,7 +39,7 @@ while [ $PW != $PW2 ]; do
     echo "Passwords do not match. Please enter a secure password:"
     read -s PW
     echo "Enter again to confirm:"
-    read -s PW
+    read -s PW2
 done 
 unset PW2
 
@@ -63,4 +63,6 @@ fi
 mv $tmp_keyfile.gpg $BITLOCKER_KEYFILE
 export PW
 $RUNTIME_ROOT_DIR/private/_mount_windows.sh
-exit $?
+exitcode=$?
+unset PW
+exit $exitcode

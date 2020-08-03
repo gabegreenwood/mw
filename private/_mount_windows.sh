@@ -17,6 +17,7 @@ exitcode=$?
 unset PW
 if [ $exitcode -ne 0  ]; then
 	echo "Please check your password and try again."
+    unset bitlocker_key
 	exit $exitcode
 fi
 
