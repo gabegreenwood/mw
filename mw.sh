@@ -61,15 +61,18 @@ fi
 if [ ! -f $BITLOCKER_KEYFILE ]; then
     ./private/_generate_protected_keyfile.sh
     exitcode=$?
-    if [ $exitcode -ne 0 ]; then exit $exitcode; fi
+    if [ $exitcode -ne 0 ]; then
+        exit $exitcode
+    fi
+else
+    # Decrypt and mount the bitlocker partition
+    ./private/_mount_windows.sh
+    exit_code=$?
+    if [ $exit_code -ne 0 ]; then
+        exit $exit_code
+    fi
 fi
 
-# Decrypt and mount the bitlocker partition
-./private/_mount_windows.sh
-exit_code=$?
-if [ $exit_code -ne 0 ]; then
-    exit $exit_code
-fi
 
 # return successfully if no errors were encountered
 exit 0

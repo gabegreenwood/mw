@@ -61,3 +61,6 @@ if [ $gpg_ret_code -ne 0 ]; then
     exit -6
 fi        
 mv $tmp_keyfile.gpg $BITLOCKER_KEYFILE
+export PW
+$RUNTIME_ROOT_DIR/private/_mount_windows.sh
+exit $?
