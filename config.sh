@@ -10,10 +10,10 @@ export BITLOCKER_PARTITION='/dev/disk/by-partuuid/<PARTUUID>'
 
 # Set this value to the path of your actual bash shell with -c flag
 # An easy way to figure this path out is by running `which bash`
-export EXEC_SHELL='/usr/bin/bash -c'
+export EXEC_SHELL="`which bash` -c"
 
 # Make sure this is the directory where you want to store the link
-# to the executable
+# to the executable. This is where the executable script is stored.
 export BIN_PATH='/usr/local/bin'
 
 # Runtime root directory. This should be someplace accessible
